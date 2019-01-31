@@ -1,22 +1,22 @@
 import numpy as np
 
-X = np.array([2, 3])
-print(X.shape)
-W = np.array([[1, 2, 3],
-              [4, 5, 6]])
-print(W.shape)
+class TwoLayerNet:
+    def __init__(self, W, b):
+        self.W = W
+        self.b = b
+        self.x = None;
+        self.dW = None;
+        self.db = None;
 
-XW = np.dot(X, W)
-print(XW.shape)
+    def forward(self, x):
+        self.x = x
+        out = np.dot(x, self.W) + self.b
 
-B = np.array([1, 1, 2])
-print(B.shape)
+        return out
 
-Y = np.add(XW, B)
-print(Y.shape)
+    def backward(self, dout):
+        dx = np.dot(dout, self.W.T)
+        self.dW = np.dot(self.x.T, dout)
+        self.db = np.sum(dout, axis=0)
 
-dY = np.ones_like(Y)
-print(dY.shape, dY)
-
-dW = np.dot(np.reshape(X, [2, 1]), np.reshape(dY, [1, 3]))
-print(dW.shape, dW)
+        return dx
