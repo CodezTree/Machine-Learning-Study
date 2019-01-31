@@ -4,9 +4,9 @@ class TwoLayerNet:
     def __init__(self, W, b):
         self.W = W
         self.b = b
-        self.x = None;
-        self.dW = None;
-        self.db = None;
+        self.x = None
+        self.dW = None
+        self.db = None
 
     def forward(self, x):
         self.x = x
