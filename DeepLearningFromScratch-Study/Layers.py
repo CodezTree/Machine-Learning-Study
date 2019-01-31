@@ -1,6 +1,6 @@
 import numpy as np
 
-class TwoLayerNet:
+class Affine:
     def __init__(self, W, b):
         self.W = W
         self.b = b
@@ -18,5 +18,24 @@ class TwoLayerNet:
         dx = np.dot(dout, self.W.T)
         self.dW = np.dot(self.x.T, dout)
         self.db = np.sum(dout, axis=0)
+
+        return dx
+
+class SoftmaxWithLoss:
+    def __init__(self):
+        self.y = None
+        self.t = None
+        self.loss = None
+
+    def forward(self, y, t):
+        self.t = t
+        self.y = softmax(y)
+        self.loss = cross_entropy(self.y, self.t)
+
+        return self.loss
+
+    def backward(self, dout=1):
+        batch_size = self.t.shape[0]
+        dx = (self.y - self.t) / batch_size
 
         return dx
