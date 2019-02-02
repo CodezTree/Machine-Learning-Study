@@ -51,6 +51,11 @@ class TwoLayerNet: # 기본적인 레이어 두개의 신경망 구현
         grads['b1'] = numerical_gradient(loss_W, self.params['b1'])
         grads['W2'] = numerical_gradient(loss_W, self.params['W2'])
         grads['b2'] = numerical_gradient(loss_W, self.params['b2'])
+        
+        # numerical_gradient에 f(function)으로 의미없는 람다로 적용된 self.loss함수를 넘겨줌. 이는 형태를 맞추기 위함
+        # numerical_gradient에서의 f를 살려주기 위함. 왜냐하면 f는 x인자를 넘겨주는데 받아주기라도 해야되기 때문
+        # 함수가 구현 가능한 이유는 python의 call by reference parameter 특성 때문임
+        # 전달받은 loss 함수는 Model의 순전파를 진행시킴
 
         return grads
 
