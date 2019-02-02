@@ -61,7 +61,7 @@ def numerical_gradient(f, x):
         x[idx] = tmp_val  # 값 복원
         it.iternext()
 
-return grad
+    return grad
 
 
 ### PRACTICE
