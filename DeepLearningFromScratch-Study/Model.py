@@ -36,8 +36,8 @@ class TwoLayerNet: # 기본적인 레이어 두개의 신경망 구현
     def accuracy(self, x, t):
         y = self.predict(x)
         y = np.argmax(y, axis=1)
-        if t.ndim != 1 : # 목표값의 차원이 1 이 아니다 -> 배치처리
-            t = np.argmax(t, axis=1) # 왜 이걸 하는걸까 공부합시다
+        if t.ndim != 1 : # 목표값의 차원이 1 이 아니다 -> 배치처리 & 원래 입력은 one_hot!
+            t = np.argmax(t, axis=1) # 왜 이걸 하는걸까 굳이 y는 해주는데 t만 따로 봐주는 이유는???
 
         accuracy = np.sum(y == t) / float(x.shape[0]) # y == t 의 갯수 값을 입력값의 갯수로 나누어준다
 
@@ -51,7 +51,7 @@ class TwoLayerNet: # 기본적인 레이어 두개의 신경망 구현
         grads['b1'] = numerical_gradient(loss_W, self.params['b1'])
         grads['W2'] = numerical_gradient(loss_W, self.params['W2'])
         grads['b2'] = numerical_gradient(loss_W, self.params['b2'])
-        
+
         # numerical_gradient에 f(function)으로 의미없는 람다로 적용된 self.loss함수를 넘겨줌. 이는 형태를 맞추기 위함
         # numerical_gradient에서의 f를 살려주기 위함. 왜냐하면 f는 x인자를 넘겨주는데 받아주기라도 해야되기 때문
         # 함수가 구현 가능한 이유는 python의 call by reference parameter 특성 때문임
