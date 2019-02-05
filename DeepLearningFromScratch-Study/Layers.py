@@ -56,3 +56,17 @@ class SoftmaxWithLoss:
         dx = (self.y - self.t) / batch_size
 
         return dx * dout
+
+class DropOut:
+    def __init__(self, drop_out = 0.9):
+        self.mask = None
+        self.drop_out = drop_out
+
+    def forward(self, x):
+        layer_size = x.shape[0]
+        self.mask = np.random.choice(layer_size, int(drop_out * layer_size))
+
+        return x[self.mask]
+
+    def backward(self, dout):
+        return dout[self.mask]
