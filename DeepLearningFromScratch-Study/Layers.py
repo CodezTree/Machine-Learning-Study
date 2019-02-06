@@ -70,3 +70,11 @@ class DropOut:
 
     def backward(self, dout):
         return dout[self.mask]
+
+class CNN:
+    def __init__(self):
+        self.t = None
+
+    def forward:
+
+    def backward:
