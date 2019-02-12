@@ -58,18 +58,20 @@ class SoftmaxWithLoss:
         return dx * dout
 
 class DropOut:
-    def __init__(self, drop_out = 0.9):
+    def __init__(self, drop_out_ratio = 0.9):
         self.mask = None
-        self.drop_out = drop_out
+        self.drop_out_ratio = drop_out_ratio
 
-    def forward(self, x):
-        layer_size = x.shape[0]
-        self.mask = np.random.choice(layer_size, int(drop_out * layer_size))
-
-        return x[self.mask]
+    def forward(self, x, train_flag=True):
+        if train_flag:
+            # self.mask = np.random.choice(layer_size, int(drop_out_ratio * layer_size)) # by myself
+            self.mask = np.random.rand(*x.shape) > self.drop_out_ratio
+            return x * self.mask # 행렬 각 원소의 곱셈 -> 제거 0 이라면
+        else:
+            return x * (1.0 - self.drop_out_ratio) # 실제 출력시는 drop out 확률이 아닌 값만큼 비율로 줄여 출력
 
     def backward(self, dout):
-        return dout[self.mask]
+        return dout * self.mask
 
 class CNN:
     def __init__(self):
