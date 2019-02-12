@@ -73,10 +73,27 @@ class DropOut:
     def backward(self, dout):
         return dout * self.mask
 
-class CNN:
-    def __init__(self):
-        self.t = None
+class Convolution:
+    def __init__(self, W, b, stride=1, pad=0):
+        self.W = W
+        self.b = b
+        self.stride = stride
+        self.pad = pad
 
-    def forward:
+    def forward(self, x):
+        FN, C, FH, FW = self.W.shape # FN - 필터의 수 / C - 채널의 수 / FH - 필터높이 / FW - 필터넓이
+        N, C, H, W = x.shape
+        out_h = int(1 + (H + 2 * self.pad - FH) / self.stride)
+        out_w = int(1 + (W + 2 * self.pad - FW) / self.stride) # out H , W 계산법 참고 바람
 
-    def backward:
+        col = im2col(x, FH, FW, self.stride, self.pad) # 평면 행렬로의 변환 실시
+        col_W = self.W.reshape(FN, -1).T # 필터를 전개시킨다
+        out = np.dot(col, col_W) + self.b # 그려서 이해하기
+
+        out = out.reshape(N, out_h, out_w, -1).transpose(0, 3, 1, 2)
+
+        return out
+
+    def backward(self):
+
+        # 책 참고해서 공부하기
