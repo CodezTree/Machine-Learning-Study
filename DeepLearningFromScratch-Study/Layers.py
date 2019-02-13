@@ -90,7 +90,7 @@ class Convolution:
         col_W = self.W.reshape(FN, -1).T # 필터를 전개시킨다
         out = np.dot(col, col_W) + self.b # 그려서 이해하기
 
-        out = out.reshape(N, out_h, out_w, -1).transpose(0, 3, 1, 2)
+        out = out.reshape(N, out_h, out_w, -1).transpose(0, 3, 1, 2) # transpose 함수는 형상의 축 순서를 변경시킨다 ( 인덱스 순 )
 
         return out
 
